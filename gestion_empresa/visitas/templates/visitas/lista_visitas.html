@@ -1,0 +1,84 @@
+{% extends 'visitas/Base.html' %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+        <h1>📋 Registro de Visitas</h1>
+        <p class="text-muted">Listado de personas en el recinto</p>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="{% url 'crear_visita' %}" class="btn btn-primary btn-lg">
+            + Nueva Visita
+        </a>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Visitante</th>
+                        <th>RUT</th>
+                        <th>Empresa</th>
+                        <th>Hora Ingreso</th>
+                        <th>Estado / Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for visita in visitas %}
+                    <tr>
+                        <td>
+                            <strong>{{ visita.nombre_visitante }}</strong><br>
+                            <small class="text-muted">{{ visita.motivo }}</small>
+                        </td>
+                        <td>{{ visita.rut }}</td>
+                        <td>
+                            {% if visita.empresa_procedencia %}
+                                {{ visita.empresa_procedencia }}
+                            {% else %}
+                                <span class="text-muted">- Particular -</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ visita.fecha_ingreso|date:"d/m H:i" }}</td>
+                        <td>
+                            {% if visita.fecha_salida %}
+                                <span class="badge bg-success">Salida: {{ visita.fecha_salida|date:"H:i" }}</span>
+                            {% else %}
+                                <a href="{% url 'marcar_salida' visita.id %}" class="btn btn-outline-danger btn-sm">
+                                    Marcar Salida
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4">
+                            No hay visitas registradas hoy.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% if is_paginated %}
+<div class="mt-3">
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+            {% endif %}
+            <li class="page-item disabled"><span class="page-link">Página {{ page_obj.number }}</span></li>
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endif %}
+
+{% endblock %}

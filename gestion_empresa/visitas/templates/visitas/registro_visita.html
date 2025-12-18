@@ -1,0 +1,45 @@
+{% extends 'visitas/Base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Registrar Entrada</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Nombre del Visitante</label>
+                        {{ form.nombre_visitante.errors }}
+                        <input type="text" name="nombre_visitante" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">RUT</label>
+                        {{ form.rut.errors }}
+                        <input type="text" name="rut" class="form-control" placeholder="12.345.678-9" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Empresa (Opcional)</label>
+                        <input type="text" name="empresa_procedencia" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Motivo de visita</label>
+                        <textarea name="motivo" class="form-control" rows="3" required></textarea>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg">Registrar Ingreso</button>
+                        <a href="{% url 'lista_visitas' %}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
