@@ -47,7 +47,9 @@
                                 <span class="badge bg-success">Salida: {{ visita.fecha_salida|date:"H:i" }}</span>
                             {% else %}
                                 <a href="{% url 'marcar_salida' visita.id %}" class="btn btn-outline-danger btn-sm">
-                                    Marcar Salida
+                                    Marcar Salida  <a       href="{% url 'eliminar_visita' visita.id %}" class="btn btn-sm btn-danger" title="Eliminar registro">
+                                            🗑️
+                                    </a>
                                 </a>
                             {% endif %}
                         </td>

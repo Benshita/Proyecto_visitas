@@ -1,0 +1,12 @@
+{% extends 'visitas/base.html' %}
+{% block content %}
+<div class="alert alert-danger">
+    <h3>¿Estás seguro?</h3>
+    <p>Vas a eliminar el registro de: <strong>{{ object.nombre_visitante }}</strong></p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+        <a href="{% url 'lista_visitas' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
