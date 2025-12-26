@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
-import dj_database_url # <--- Agrega esto
 from pathlib import Path
-
+import dj_database_url
+from dotenv import load_dotenv
+load_dotenv()
+#################################
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,6 +46,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -76,9 +79,9 @@ WSGI_APPLICATION = "gestion_empresa.wsgi.application"
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -105,22 +108,28 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+# gestion_empresa/settings.py
 
-TIME_ZONE = "UTC"
+LANGUAGE_CODE = 'es-cl' # Opcional: Pone a Django en Español de Chile
+
+TIME_ZONE = 'America/Santiago' # <--- ESTO CAMBIA LA HORA
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = True # Déjalo en True para que guarde bien las fechas
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = 'static/'
 
-# --- CONFIGURACIÓN DE LOGIN ---
-# Cuando entras correctamente, te manda a la lista
-LOGIN_REDIRECT_URL = 'lista_visitas' 
-# Cuando sales, te manda de vuelta al login
+# Esto le dice a Django dónde juntar todos los archivos para la nube
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Esto activa la compresión y caché de WhiteNoise
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Configuración de Login (Ya la tenías, pero verifica que siga ahí)
+LOGIN_REDIRECT_URL = 'lista_visitas'
 LOGOUT_REDIRECT_URL = 'login'
