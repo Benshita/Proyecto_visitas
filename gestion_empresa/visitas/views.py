@@ -11,6 +11,15 @@ from django.views.generic import DeleteView
 from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets
 from .serializers import GroupSerializer, UserSerializer, VisitaSerializer
+from .models import Visita, Mensaje       # <--- Asegúrate de importar Mensaje
+from .serializers import VisitaSerializer, MensajeSerializer # <--- Y el serializer
+
+
+class MensajeViewSet(viewsets.ModelViewSet):
+    queryset = Mensaje.objects.all().order_by('-fecha') # Ordenar por fecha reciente
+    serializer_class = MensajeSerializer
+    # Permitimos acceso total para que el chat no falle en el video
+    permission_classes = [permissions.AllowAny]
 
 
 class VisitaViewSet(viewsets.ModelViewSet):

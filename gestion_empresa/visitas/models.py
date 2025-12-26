@@ -16,3 +16,13 @@ class Visita(models.Model):
         verbose_name = "Visita"
         verbose_name_plural = "Registro de Visitas"
         ordering = ['-fecha_ingreso']
+
+
+# --- MODELO PARA EL CHAT ---
+class Mensaje(models.Model):
+    autor = models.CharField(max_length=100, default="Anónimo")
+    texto = models.TextField()
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.autor}: {self.texto}"

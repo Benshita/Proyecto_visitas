@@ -9,7 +9,7 @@ router = routers.DefaultRouter()
 router.register(r"users", views.UserViewSet)
 router.register(r"groups", views.GroupViewSet)
 router.register(r"visitas", views.VisitaViewSet)
-
+router.register(r'chat', views.MensajeViewSet)
 
 
 
