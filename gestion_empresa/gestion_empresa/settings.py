@@ -32,7 +32,8 @@ ALLOWED_HOSTS = [
     ".onrender.com"
     ]
 
-CORS_ALLOWED_ORIGINS = True
+# Permitir que CUALQUIERA se conecte (Más fácil para tareas)
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
