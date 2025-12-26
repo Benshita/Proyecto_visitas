@@ -8,6 +8,9 @@ from .forms import VisitaForm
 from django.contrib import messages
 from django.views.generic import DeleteView
 
+from django.contrib.auth.models import Group, User
+from rest_framework import permissions, viewsets
+from .serializers import GroupSerializer, UserSerializer
 # 1. Listar Visitas (Dashboard)
 class ListaVisitasView(LoginRequiredMixin, ListView):
     model = Visita
@@ -45,3 +48,15 @@ def marcar_salida(request, pk):
         visita.save()
     return redirect('lista_visitas')
 
+class UserViewSet(viewsets.ModelViewSet):
+
+    queryset = User.objects.all().order_by("-date_joined")
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+
+    queryset = Group.objects.all().order_by("name")
+    serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
