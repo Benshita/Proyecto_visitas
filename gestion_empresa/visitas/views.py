@@ -16,7 +16,7 @@ from .serializers import GroupSerializer, UserSerializer, VisitaSerializer
 class VisitaViewSet(viewsets.ModelViewSet):
     queryset = Visita.objects.all().order_by("-fecha_ingreso")
     serializer_class = VisitaSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 # 1. Listar Visitas (Dashboard)
 class ListaVisitasView(LoginRequiredMixin, ListView):
