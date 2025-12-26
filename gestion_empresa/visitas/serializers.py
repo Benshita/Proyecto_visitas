@@ -1,5 +1,11 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import serializers
+from .models import Visita
+
+class VisitaSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Visita
+        fields = ["url", "nombre_visita", "empresa", "fecha_entrada", "fecha_salida", "motivo_visita"]
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

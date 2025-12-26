@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "visitas",
-    "rest_framework",
+    'rest_framework',
 ]
 
 REST_FRAMEWORK = {

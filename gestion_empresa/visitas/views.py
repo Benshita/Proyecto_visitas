@@ -10,7 +10,14 @@ from django.views.generic import DeleteView
 
 from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets
-from .serializers import GroupSerializer, UserSerializer
+from .serializers import GroupSerializer, UserSerializer, VisitaSerializer
+
+
+class VisitaViewSet(viewsets.ModelViewSet):
+    queryset = Visita.objects.all().order_by("-fecha_ingreso")
+    serializer_class = VisitaSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 # 1. Listar Visitas (Dashboard)
 class ListaVisitasView(LoginRequiredMixin, ListView):
     model = Visita
